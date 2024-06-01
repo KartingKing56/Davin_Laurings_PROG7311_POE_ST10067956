@@ -16,6 +16,7 @@ namespace Davin_Laurings_PROG7311_POE_ST10067956
     public partial class Login : System.Web.UI.Page
     {
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection2"].ConnectionString;
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
