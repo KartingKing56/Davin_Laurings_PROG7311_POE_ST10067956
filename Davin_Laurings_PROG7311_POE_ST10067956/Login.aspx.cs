@@ -7,13 +7,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Runtime.Remoting.Messaging;
+using System.Drawing.Printing;
 
 namespace Davin_Laurings_PROG7311_POE_ST10067956
 {
     public partial class Login : System.Web.UI.Page
     {
-        static string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection2"].ConnectionString;
-        DatabaseHandler d;
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection2"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,40 +26,42 @@ namespace Davin_Laurings_PROG7311_POE_ST10067956
         {
             try
             {
-                SqlConnection con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "sp_Login";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Username", txtUsername.Text.ToString());
-                cmd.Parameters.AddWithValue("@Password", txtPassword.Text.ToString());
-
-                lblErrorMessage.Visible = true;
-
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read()) 
+                using (SqlConnection con = new SqlConnection(connectionString))
                 {
-                    Session["Username"] = txtUsername.Text.ToString();
-                    Session["ID"] = char.Parse(reader["ID"].ToString());
-                    Session["Category"] = char.Parse(reader["Category"].ToString());
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = "sp_Login";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Username", txtUsername.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Password", txtPassword.Text.ToString());
 
-                    Response.Redirect("~/Default.aspx");
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
 
-                    reader.Close();
+                        if (reader.Read())
+                        {
+                            Session["Username"] = txtUsername.Text.ToString();
+                            Session["ID"] = reader["ID"].ToString();
+                            Session["Category"] = reader["Category"].ToString();
+
+                            Response.Redirect("~/Default.aspx");
+
+                            reader.Close();
+                            con.Close();
+                        }
+                        else
+                        {
+                            lblErrorMessage.Visible = true;
+                        }
+                        reader.Close();
+                    }
                     con.Close();
                 }
-                else
-                {
-                    lblErrorMessage.Visible = true;
-                }
-
-                reader.Close();
-
-                con.Close();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-            
+
             }
         }
     }
