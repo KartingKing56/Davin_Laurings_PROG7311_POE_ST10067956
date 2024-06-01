@@ -39,7 +39,7 @@ namespace Davin_Laurings_PROG7311_POE_ST10067956
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtUsername;
+        protected global::System.Web.UI.WebControls.TextBox txtUsername;
 
         /// <summary>
         /// txtPassword control.
@@ -48,7 +48,7 @@ namespace Davin_Laurings_PROG7311_POE_ST10067956
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPassword;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
         /// btnLogin control.
@@ -57,6 +57,6 @@ namespace Davin_Laurings_PROG7311_POE_ST10067956
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnLogin;
+        protected global::System.Web.UI.WebControls.Button btnLogin;
     }
 }
