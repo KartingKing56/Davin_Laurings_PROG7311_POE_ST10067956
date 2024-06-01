@@ -1,0 +1,21 @@
+﻿/* styles.css */
+
+/* Sticky footer styles */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* This pushes the footer to the bottom */
+}
+
+footer {
+    background-color: #f8f9fa; /* Set your desired background color */
+    padding: 20px;
+    text-align: center;
+}
